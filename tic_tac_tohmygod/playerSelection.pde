@@ -1,0 +1,4 @@
+void playerSelection(){
+  
+  if (!playerOneReady){
+    

@@ -1,7 +1,16 @@
 int gameState = 0;
+int ticker = 0;
+PFont lazerFont;
+boolean singlePlayerGame = true;
+boolean playerOneReady = false;
+Player playerOne, playerTwo;
 
-void setup(){
-  size(600,600);
+void setup() {
+  size(600, 600);
+  lazerFont = createFont("Lazer84.ttf", 32);
+  textFont(lazerFont);
+  textAlign(CENTER,CENTER);
+  frameRate(20);
 }
 
 static class EGameState
@@ -12,35 +21,29 @@ static class EGameState
   static final int gameOver=3;
 }
 
-void draw(){
+void draw() {
   switch (gameState) {
-    case EGameState.mainMenu:
+  case EGameState.mainMenu:
     mainMenu();
     break;
-    
-    case EGameState.playerSelection:
-    
+
+  case EGameState.playerSelection:
     break;
-    
-    case EGameState.gameplay:
+
+  case EGameState.gameplay:
     drawTicTacToeGrid();
     break;
-    
-    case EGameState.gameOver:
-    
+
+  case EGameState.gameOver:
+
     break;
   } //end gameState switch
+  ticker++;
 } //end draw
 
-void drawTicTacToeGrid(){
+void drawTicTacToeGrid() {
   line(width*.33, height*.1, width*.33, height*.9);
   line(width*.66, height*.1, width*.66, height*.9);
   line(width*.1, height*.33, width*.9, height*.33);
   line(width*.1, height*.66, width*.9, height*.66);
 } //end drawTicTacToeGrid
-
-void mainMenu(){
-  background(0);
-  text("1P vs CPU", width/2, height*.5);
-  text("1P vs 2P", width/2, height*.75);
-}
