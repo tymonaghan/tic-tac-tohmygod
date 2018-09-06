@@ -1,9 +1,12 @@
 int gameState = 0;
 int ticker = 0;
+int itemSelected = 0;
+int characterCount = 0;
 PFont lazerFont;
 boolean singlePlayerGame = true;
 boolean playerOneReady = false;
 Player playerOne, playerTwo;
+char[] playerNameChars = new char[0];
 
 void setup() {
   size(600, 600);
@@ -28,6 +31,7 @@ void draw() {
     break;
 
   case EGameState.playerSelection:
+  playerSelection();
     break;
 
   case EGameState.gameplay:
@@ -47,3 +51,7 @@ void drawTicTacToeGrid() {
   line(width*.1, height*.33, width*.9, height*.33);
   line(width*.1, height*.66, width*.9, height*.66);
 } //end drawTicTacToeGrid
+
+void resetTicker(){
+  ticker = 0;
+} //end resetTicker

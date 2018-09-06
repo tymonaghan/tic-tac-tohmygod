@@ -1,4 +1,81 @@
-void playerSelection(){
+void playerSelection() {
+  background(25);
+  if (!playerOneReady) {
+    fill(255);
+    textSize(45);
+    text("Player One", width/2, height *.15);
+    text(playerOne.playerName, width/2, height*.25);
+
+    textSize(30);
+    text("Name", width*.25, height *.4);
+    text("Token", width*.25, height*.55);
+    text("Color", width*.25, height*.7);
+    highlightBox();
+    listenForKeypressPlayerSelection();
+    if (itemSelected ==0) {
+      playerNameEntry(1);
+    } else if (itemSelected == 1) {
+      playerTokenSelect(1);
+    } else if (itemSelected == 2) {
+      playerColorSelect(1);
+    }
+  } //if player one is not ready yet
+}//end playerSelection
+
+void highlightBox() {
+  int highlightBoxYOffset = int(height*(0.4+(itemSelected * 0.15)));
+  stroke(255, 255, 100);
+  fill(255, 255, 100, 40);
+  rectMode(CENTER);
+  rect(width*.5, highlightBoxYOffset, width*.8, height*.15);
+} //end highlightBox
+
+void listenForKeypressPlayerSelection() {
+  if (keyPressed && ticker > 3) {
+    if (keyCode == UP && itemSelected > 0) {
+      decrementItemSelected();
+    } else if (keyCode == DOWN && itemSelected <2) {
+      incrementItemSelected();
+    }
+    resetTicker();
+  }
+}
+
+void incrementItemSelected() {
+  itemSelected++;
+}
+
+void decrementItemSelected() {
+  itemSelected--;
+}
+
+void playerNameEntry(int playerNumber_) {
+
+  listenForKeypressPlayerName();
   
-  if (!playerOneReady){
-    
+  
+}
+
+void listenForKeypressPlayerName(){
+  if (keyPressed == true && ticker >3){
+    if (key == ENTER){
+      String namestring = str(playerNameChars);
+  println("player name char array:"+playerNameChars);
+    } else {//end if ENTER is pressed
+    //playerNameChars[characterCount] = key;
+    playerNameChars = append (playerNameChars, key);
+    if (playerNumber_ == 1) {
+    playerOne.setPlayerName(namestring);
+  } else if (playerNumber_ ==2) {
+    playerTwo.setPlayerName(namestring);
+  }
+    resetTicker();
+    }
+  }// end if key pressed
+} //end listenforKeypressPlayerName
+
+void playerTokenSelect(int playerNumber_){
+}
+
+void playerColorSelect(int playerNumber_){
+}

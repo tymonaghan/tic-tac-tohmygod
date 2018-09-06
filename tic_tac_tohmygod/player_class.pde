@@ -7,6 +7,7 @@ class Player {
   
   Player(boolean human_){
     isHuman = human_;
+    playerName = " ";
   }
   
   void setPlayerName(String name_){
