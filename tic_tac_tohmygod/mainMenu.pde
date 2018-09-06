@@ -27,7 +27,33 @@ void listenForKeypressMainMenu(){
     } else if (key == ' ' || key == ENTER){ //end if up or down is pressed, begin if space or enter is pressed
     playerOne = new Player(true);
     playerTwo = new Player(!singlePlayerGame);
+    playerOne.setPlayerColor(color(255,100,100));
+    playerTwo.setPlayerColor(color(100,255,100));
     gameState=1;
     }//end if space or enter is pressed
   }//end if key is pressed
 } //end listenforKeypressMainMenu
+
+void coinToss(){
+  fill(255);
+  background(35);
+  text("tossing coin \nto determine play order\n\n\n"+playerOne.playerName+" select",width/2,height*.33);
+  
+  rectMode(CENTER);
+  fill(255,255,100);
+  rect(width*.3, height *.75, width*.25, height*.10);
+  fill(0);
+  text("HEADS", width*.3,height*.75);
+  
+  fill(255,255,225);
+  rect(width*.7, height*.75, width*.25, height*.10);
+  fill(0);
+  text("TAILS",width*.7, height*.75);
+  
+  if (keyPressed && ticker >3){
+    if (key == ENTER){
+      gameState=2;
+    } //end if ENTER pressed
+  } //end if keypressed
+  
+} //end coin toss
