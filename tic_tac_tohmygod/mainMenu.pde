@@ -2,10 +2,7 @@ void mainMenu() {
   int titleXPosition = int(-(width*.5));
   int titleFlyinSpeed = ticker * 6;
   //one-time functions at the beginning of main menu
-  if (firstRun) { //this is just so the music plays once without looping. i'm sure there's a more elegant way to achieve this
-    menuMusic.loop();
-    firstRun = !firstRun;
-  }
+
   background(0);
   if (!keysHaveBeenPressed && runTimeTicker<100) {
     titleMenuSlideIn(titleXPosition, titleFlyinSpeed);
@@ -33,10 +30,20 @@ void displayMainMenu() {
   textSize(30);
   if (singlePlayerGame) {
     fill(255, 100, 255);
+     
   } else {
     fill (255);
   } // end if /else for 1p game highlighted
   text("1P vs CPU", width/2, height*.6);
+  
+  
+  /*pushStyle();
+    textFont(stencil);
+    rotate(degrees(40));
+    fill(255, 0, 0);
+    text("Coming Soon", width/2, height*.6);
+    popStyle();
+    I wanted A COMING SOON badge on the 1p menu item, but it's busted*/
   if (!singlePlayerGame) {
     fill(255, 100, 255);
   } else {
@@ -44,7 +51,6 @@ void displayMainMenu() {
   } //end if/else for 2p game highlighted
   text("1P vs 2P", width/2, height*.75);
   listenForKeypressMainMenu();
-  
 }
 
 

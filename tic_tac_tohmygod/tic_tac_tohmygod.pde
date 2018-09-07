@@ -7,6 +7,7 @@ int runTimeTicker = 0;
 int itemSelected = 0;
 int characterCount = 0;
 PFont lazerFont;
+PFont stencil;
 boolean singlePlayerGame = true;
 boolean firstRun = true;
 boolean keysHaveBeenPressed = false;
@@ -22,6 +23,7 @@ color color2 = color(#FA00D9); //pink-magenta
 void setup() {
   size(600, 600);
   lazerFont = createFont("Lazer84.ttf", 32);
+  stencil = createFont ("STENCIL.TTF",30);
   textFont(lazerFont);
   textAlign(CENTER, CENTER);
   frameRate(20);
@@ -61,6 +63,8 @@ void draw() {
   } //end gameState switch
   ticker++;
   runTimeTicker++;
+  musicManager();
+  println(PFont.list());
 } //end draw
 
 void drawTicTacToeGrid() {
@@ -86,4 +90,24 @@ void resetTicker() {
 
 void keysHaveBeenPressed() {
   keysHaveBeenPressed=true;
+  if (runTimeTicker<100) {
+  }//end if
 } //end keysHaveBeenPressed
+
+void musicManager() {
+  if (firstRun) { //this is just so the music plays once without looping. i'm sure there's a more elegant way to achieve this
+    menuMusic.play();
+    firstRun = !firstRun;
+  }
+  //if player presses key before slide-in is complete, skip the music ahead:
+  if (keysHaveBeenPressed && runTimeTicker<100) {
+   // menuMusic.stop();
+   // menuMusic.cue(1.7);
+  // menuMusic.play();
+  }
+  //to repeat music:
+  if (!menuMusic.isPlaying() && runTimeTicker>100) {
+    menuMusic.cue(5);
+    //menuMusic.play();
+  } //to loop menu music from the 5 second mark (skipping fade in)
+} //end music manager
