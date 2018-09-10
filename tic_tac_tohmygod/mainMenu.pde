@@ -8,9 +8,36 @@ void mainMenu() {
     titleMenuSlideIn(titleXPosition, titleFlyinSpeed);
   } else {
     displayMainMenu();
+    comingSoonBadge();
   }
   if (keyPressed==true) {
     keysHaveBeenPressed();
+  }
+}
+
+void comingSoonBadge() {
+  if (singlePlayerGame) {
+    pushMatrix();
+
+    translate(width/2, height*.6);
+    rotate(3);
+
+    pushStyle();
+    textFont(pixelFont);
+    textSize(20);
+
+    fill(255, 0, 0);
+    textAlign(CENTER);
+    rectMode(CENTER);
+    text("Coming Soon", 0,0);
+    stroke(255,0,0);
+    strokeWeight(3);
+    noFill();
+    rect(0,-5,textWidth("Coming Soon")+5, 25);
+        popStyle();
+
+    popMatrix();
+    //I can't quite get this to rotate the way i want it to..
   }
 }
 
@@ -29,27 +56,22 @@ void displayMainMenu() {
   text("TIC - TAC - \n TOHMYGOD!", width*.5, height*.250);
   textSize(30);
   if (singlePlayerGame) {
-    fill(255, 100, 255);
-     
+    //fill(255, 100, 255);
+    fill(255);  // don't highlight the selection when the COMING SOON badge is already there, leave it white
   } else {
     fill (255);
   } // end if /else for 1p game highlighted
   text("1P vs CPU", width/2, height*.6);
-  
-  
-  /*pushStyle();
-    textFont(stencil);
-    rotate(degrees(40));
-    fill(255, 0, 0);
-    text("Coming Soon", width/2, height*.6);
-    popStyle();
-    I wanted A COMING SOON badge on the 1p menu item, but it's busted*/
+
+
+
   if (!singlePlayerGame) {
     fill(255, 100, 255);
   } else {
     fill(255);
   } //end if/else for 2p game highlighted
   text("1P vs 2P", width/2, height*.75);
+
   listenForKeypressMainMenu();
 }
 

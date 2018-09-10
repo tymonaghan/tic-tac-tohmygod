@@ -7,7 +7,7 @@ int runTimeTicker = 0;
 int itemSelected = 0;
 int characterCount = 0;
 PFont lazerFont;
-PFont stencil;
+PFont pixelFont;
 boolean singlePlayerGame = true;
 boolean firstRun = true;
 boolean keysHaveBeenPressed = false;
@@ -18,12 +18,13 @@ char[] playerNameChars = new char[0];
 color color0 = color(#F9FA00); //yellow
 color color1 = color(#00FAE3); //teal
 color color2 = color(#FA00D9); //pink-magenta
+color gameBoardColor = color0;
 
 
 void setup() {
   size(600, 600);
   lazerFont = createFont("Lazer84.ttf", 32);
-  stencil = createFont ("STENCIL.TTF",30);
+  pixelFont = createFont("pixel.otf",30);
   textFont(lazerFont);
   textAlign(CENTER, CENTER);
   frameRate(20);
@@ -69,10 +70,7 @@ void draw() {
 
 void drawTicTacToeGrid() {
   background(40);
-  line(width*.33, height*.1, width*.33, height*.9);
-  line(width*.66, height*.1, width*.66, height*.9);
-  line(width*.1, height*.33, width*.9, height*.33);
-  line(width*.1, height*.66, width*.9, height*.66);
+  
 
   textSize(15);
   fill(playerOne.playerColor);
