@@ -12,14 +12,15 @@ boolean singlePlayerGame = true;
 boolean firstRun = true;
 boolean keysHaveBeenPressed = false;
 boolean playerOneReady = false;
+boolean playerOnesTurn = true;
 Player playerOne, playerTwo;
+GameBoard gameBoard;
 char[] playerNameChars = new char[0];
 
 color color0 = color(#F9FA00); //yellow
 color color1 = color(#00FAE3); //teal
 color color2 = color(#FA00D9); //pink-magenta
-color gameBoardColor = color0;
-
+color uiTextColor = color(255);
 
 void setup() {
   size(600, 600);
@@ -29,70 +30,58 @@ void setup() {
   textAlign(CENTER, CENTER);
   frameRate(20);
   menuMusic= new SoundFile (this, "Protovision.wav");
+  gameBoard = new GameBoard(color(255,150,255), 1);
 }
 
-static class EGameState
+static class EGameState // assign gamestates to ints
 {
-  static final int mainMenu=0;
-  static final int playerSelection=1;
-  static final int gameplay=2;
-  static final int gameOver=3;
-  static final int coinToss=4;
+  static final int mainMenu=0; // the main menu, select 1p or 2p
+  static final int playerSelection=1; //select player name, token and color
+  static final int gameplay=2; //the tic-tac-toe action
+  static final int gameOver=3; //when a game is finished; show score and give options (quit, rematch)
+  static final int coinToss=4; //a function to randomly decide which player goes first
 }
 
 void draw() {
+  //draw primarily consists of this gamestate switch which contains all the other parts of the game...
   switch (gameState) {
   case EGameState.mainMenu:
     mainMenu();
     break;
-
   case EGameState.playerSelection:
     playerSelection();
     break;
-
   case EGameState.gameplay:
-    drawTicTacToeGrid();
+    gameplay();
     break;
-
   case EGameState.gameOver:
 
     break;
-
   case EGameState.coinToss:
     coinToss();
     break;
   } //end gameState switch
+  
+  //the rest of draw just contains counters and the function for controlling game music
   ticker++;
   runTimeTicker++;
   musicManager();
-  println(PFont.list());
+  //println(gameBoard.squareStates);
+  
 } //end draw
 
-void drawTicTacToeGrid() {
-  background(40);
-  
 
-  textSize(15);
-  fill(playerOne.playerColor);
-  textAlign(LEFT);
-  text(playerOne.playerName, width*.05, height*.05);
-
-  fill(playerTwo.playerColor);
-  textAlign(RIGHT);
-  text(playerTwo.playerName, width*.95, height*.05);
-} //end drawTicTacToeGrid
-
-void resetTicker() {
+void resetTicker() {  //this ticker is mainly used to avoid keys being multiple-pressed accidentally
   ticker = 0;
 } //end resetTicker
 
-void keysHaveBeenPressed() {
+void keysHaveBeenPressed() {  //used in trying to implement the ability to skip the main title fly-in
   keysHaveBeenPressed=true;
   if (runTimeTicker<100) {
   }//end if
 } //end keysHaveBeenPressed
 
-void musicManager() {
+void musicManager() {  //this is overly complicated because i tried to make the music jump to the drop when the user skips the main title fly-in
   if (firstRun) { //this is just so the music plays once without looping. i'm sure there's a more elegant way to achieve this
     menuMusic.play();
     firstRun = !firstRun;

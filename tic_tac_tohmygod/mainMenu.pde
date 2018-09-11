@@ -4,44 +4,42 @@ void mainMenu() {
   //one-time functions at the beginning of main menu
 
   background(0);
-  if (!keysHaveBeenPressed && runTimeTicker<100) {
+  if (!keysHaveBeenPressed && runTimeTicker<100) { //if the program has just started and no keys have been pressed, let the main title fly in
     titleMenuSlideIn(titleXPosition, titleFlyinSpeed);
-  } else {
+  } else { //if the title has finished flying in or keys have been pressed, show and flash the title
     displayMainMenu();
-    comingSoonBadge();
+    comingSoonBadge(); //coming soon badge for 1p option on main menu
   }
   if (keyPressed==true) {
-    keysHaveBeenPressed();
+    keysHaveBeenPressed(); //stupid keysHaveBeenPressed toggle for trying to implement title fly-in skipping
   }
 }
 
-void comingSoonBadge() {
+void comingSoonBadge() { //show a red "COMING SOON" badge over the 1p option, when highlighted.
   if (singlePlayerGame) {
     pushMatrix();
-
     translate(width/2, height*.6);
     rotate(3);
 
     pushStyle();
     textFont(pixelFont);
     textSize(20);
-
     fill(255, 0, 0);
     textAlign(CENTER);
     rectMode(CENTER);
-    text("Coming Soon", 0,0);
-    stroke(255,0,0);
+    text("Coming Soon", 0, 0);
+    stroke(255, 0, 0);
     strokeWeight(3);
     noFill();
-    rect(0,-5,textWidth("Coming Soon")+5, 25);
-        popStyle();
-
+    rect(0, -5, textWidth("Coming Soon")+5, 25);
+    
+    popStyle();
     popMatrix();
     //I can't quite get this to rotate the way i want it to..
   }
 }
 
-void titleMenuSlideIn(int xPos_, int speed_) {
+void titleMenuSlideIn(int xPos_, int speed_) {  //initial main title fly-in
   int xPosition = xPos_;
   int speed = speed_;
   textSize(50);
@@ -49,7 +47,7 @@ void titleMenuSlideIn(int xPos_, int speed_) {
   text("TIC - TAC - \n TOHMYGOD!", xPosition+speed, height*.250);
 } //emd titleMenuSlideIn
 
-void displayMainMenu() {
+void displayMainMenu() { //the main menu once the fly-in is complete
   textSize(50);
   fill(color(titleColorFlasher()));
   //change text to slide in and get color as it goes
@@ -63,8 +61,6 @@ void displayMainMenu() {
   } // end if /else for 1p game highlighted
   text("1P vs CPU", width/2, height*.6);
 
-
-
   if (!singlePlayerGame) {
     fill(255, 100, 255);
   } else {
@@ -72,11 +68,11 @@ void displayMainMenu() {
   } //end if/else for 2p game highlighted
   text("1P vs 2P", width/2, height*.75);
 
-  listenForKeypressMainMenu();
+  listenForKeypressMainMenu(); //there must be  a better way to handle input but this works for now
 }
 
 
-int titleColorFlasher() {
+int titleColorFlasher() { //flash colors for main title.. could maybe use elsewhere, like grid laser effect
   int returnColor = (0);
   if (ticker/3%3==0) {
     returnColor=color(249, 250, 0); //yellow
@@ -108,7 +104,7 @@ void listenForKeypressMainMenu() {
 
 //========================================
 //==========COIN TOSS =====================
-void coinToss() {
+void coinToss() { //toss a virtual coin to determine who goes first (is "X"). untested
   fill(255);
   background(35);
   text("tossing coin \nto determine play order\n\n\n"+playerOne.playerName+" select", width/2, height*.33);

@@ -1,6 +1,6 @@
-void playerSelection() {
+void playerSelection() { //player name, token, and color selection before gameplay.
   background(25);
-  if (!playerOneReady) {
+  if (!playerOneReady) { //P1 always needs to do this process, and will go first. once they are done, playerOneReady will be set to true, and it can let P2 customize or begin the game depending on whether its a 1p or 2p game.
     fill(255);
     textSize(45);
     text("Player One", width/2, height *.15);
@@ -45,7 +45,7 @@ void listenForKeypressPlayerSelection() {
     } else if (keyCode == DOWN && itemSelected <2) {
       incrementItemSelected();
     } else if (key == ENTER) {
-      gameState=4;
+      gameState=2; // i am setting this to 2:gameplay right now, but it should go back to 4:coin toss later
       resetTicker();
     }
     resetTicker();

@@ -1,17 +1,15 @@
-class GameBoard {
+//controls the appearance and behavior of the gameplay area, including background, game grid, individual game squares, and scoreboard
+
+class GameBoard {  
   color gridLinesColor;
   color gameBoardBackgroundColor;
   int gameBoardLaserIntensity;
   int [] squareStates = new int[9];
-  /*int square0state;
-   int square1state;
-   int square2state;
-   int square3state;
-   int square4state;
-   int square5state;
-   int square6state;
-   int square7state;
-   int square8state;  */
+  //int[][] squareXs = new int[3][3];
+  //int[][] squareYs = new int[3][3];  2d array makes more visual sense but is more challenging to code so keeping with 1d arrays for now
+  float[] squareXXs = new float[9];
+  float[] squareYYs = new float[9];
+  int squareHighlighted = 4;
   // 0 == unmarked,  1 == player1/x,  2 == player2/o
 
   GameBoard(color boardColor_, int lasers_) {
@@ -19,31 +17,79 @@ class GameBoard {
       squareStates[i] = 0;
     } //end for loop to initialize square states array
 
-    gridLinesColor = color0;
+    for (int xx = 0; xx < 9; xx++) { //initialize the squareXXs array
+      squareXXs[xx] = 0.25+(0.25*(xx%3));
+    }
+
+    for (int yy = 0; yy < 9; yy++) { //initialize the squareYYs array
+      squareYYs[yy] = 0.25 +(int(yy/3)*.25);
+    }
+    /*  the init loop for the 2d arrays, should i decide to bring them back
+     for (int j = 0; j < 3; j++){
+     for (int k = 0; k < 3; k++){
+     squareXs[j][k] = 0.25+(j*0.25);
+     squareYs[j][j] = 0.25+(k*0.25);
+     }
+     } // end for-loop to initialize X-Y arrays
+     */
+
+    gridLinesColor = color(255, 255, 150);
     gameBoardBackgroundColor = 45;
     gameBoardLaserIntensity = 1;
   }
 
   void drawGridLines() {
-    stroke(gameBoardColor);  
+    stroke(gridLinesColor);  
     line(width*.33, height*.1, width*.33, height*.9);
     line(width*.66, height*.1, width*.66, height*.9);
     line(width*.1, height*.33, width*.9, height*.33);
     line(width*.1, height*.66, width*.9, height*.66);
+    //println(squareYYs);
   } //end drawGridLines
 
-  boolean checkIfSquareAvailable(int squareToCheck_) {
-    int squareToCheck = squareToCheck_;
-    // if (squareToCheck
-    return true;
+  void squareSelector() { // the player uses LEFT and RIGHT arrows to cycle through the squares on the game board
+    if (keyPressed == true && ticker > 3) {
+      resetTicker();
+      if (key == CODED && keyCode == LEFT) {
+        if (squareHighlighted < 1) {
+          this.setHighlightedSquare(8);
+        } else {
+          squareHighlighted--;
+        }
+      } else if (key == CODED && keyCode == RIGHT) {
+        if (squareHighlighted > 7) {
+          this.setHighlightedSquare(0);
+        } else {
+          squareHighlighted++;
+        }
+      }
+    }
   }
 
-  void playTokenOnSquare(int squareToPlay_, boolean playerOnesTurn_) {
+
+  void setHighlightedSquare(int int_) { //setter for changing the squareHighlighted variable
+    squareHighlighted = int_;
+  }
+
+  int getHighlightedSquare() { //getting for the squareHighlighted variable
+    return squareHighlighted;
+  }
+
+  boolean checkIfSquareAvailable(int squareToCheck_) { //check if the square is open (true) or has already been played (false)
+    int squareToCheck = squareToCheck_;
+    if (squareStates[squareToCheck] == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }//end checkifsquareavailable
+
+  void playTokenOnSquare(int squareToPlay_, boolean playerOnesTurn_) { //function to be called when the player hits ENTER or SPACE on a square during their turn. this and the markX, markO functions are untested.
     int squareToPlay = squareToPlay_;
     boolean playerOnesTurn = playerOnesTurn_;
 
     //if the square is already full, return an error
-    if (checkIfSquareAvailable(squareToPlay) == false) {
+    if (checkIfSquareAvailable(squareToPlay) == false) { 
       text("invalid move", 0, 0);
 
       //but if the square is available...
@@ -66,27 +112,49 @@ class GameBoard {
     squareStates[square] = 2;
   }
 
-  void setGameBoardBackgroundColor(color bgCol_) {
+  void setGameBoardBackgroundColor(color bgCol_) { //setter for bg color
     gameBoardBackgroundColor = bgCol_;
   } //end setBoardBackgroundColor
-
-  void setGridLinesColor(color gridCol_) {
-    gridLinesColor = gridCol_;
-  } //end setGridLinesColor
-
-  void setLaserIntensity(int intense_) {
-    gameBoardLaserIntensity = intense_;
-  } //end setLaserIntensity
-
-  color getBoardBackgroundColor() {
+  color getBoardBackgroundColor() { //getter for bg color
     return gameBoardBackgroundColor;
   } //get BoardBackgroundColor
-
-  color getGridLinesColor() {
+  void setGridLinesColor(color gridCol_) { //setter for grid lines color
+    gridLinesColor = gridCol_;
+  } //end setGridLinesColor
+  color getGridLinesColor() { //getter for grid lines color 
     return gridLinesColor;
   } //get gridlinescolor
-
-  int getLaserIntensity() {
+  void setLaserIntensity(int intense_) { //setter for laser intensity (glowing/pulsating lines for win-streak player)
+    gameBoardLaserIntensity = intense_;
+  } //end setLaserIntensity
+  int getLaserIntensity() { //getter for laser intensity
     return gameBoardLaserIntensity;
   }
+
+  void drawScoreBoard() {  //scoreboard - player names and win counts
+    textFont(lazerFont);
+    textSize(15);
+    fill(playerOne.playerColor);
+    textAlign(LEFT);
+    text(playerOne.playerName, width*.05, height*.05); //draw p1 name
+    fill(playerTwo.playerColor);
+    textAlign(RIGHT);
+    text(playerTwo.playerName, width*.95, height*.05); //draw p2 name
+
+    //add helper text under player names
+    textFont(pixelFont);
+    textSize(15);
+    fill(uiTextColor);
+    if (playerOnesTurn) {
+      textAlign(LEFT);
+      text("Your move", width*.05, height*.1);
+      textAlign(RIGHT);
+      text("Please Wait...", width*.95, height*.1);
+    } else {
+      textAlign(LEFT);
+      text("Your move", width*.95, height*.1);
+      textAlign(RIGHT);
+      text("Please Wait...", width*.05, height*.1);
+    }
+  } //end drawSCoreBoard
 } //end gameBoard class
