@@ -2,8 +2,7 @@ void gameplay(){  // main gameplay loop - draw bg and grid, and players take tur
   background(gameBoard.getBoardBackgroundColor());
   gameBoard.drawGridLines();
   gameBoard.drawScoreBoard();
-  gameBoard.drawPlayedTokens();
-  
+  gameBoard.drawPlayedTokens();  
   if (playerOnesTurn){
     playerOne.takeTurn();
   } else {

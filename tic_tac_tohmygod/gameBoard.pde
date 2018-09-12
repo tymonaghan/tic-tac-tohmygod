@@ -44,6 +44,7 @@ class GameBoard {
     line(width*.66, height*.1, width*.66, height*.9);
     line(width*.1, height*.33, width*.9, height*.33);
     line(width*.1, height*.66, width*.9, height*.66);
+
     //println(squareYYs);
   } //end drawGridLines
 
@@ -106,19 +107,15 @@ class GameBoard {
   void markSquareX(int square_) {
     int square = square_;
     squareStates[square] = 1;
-    textSize(50);
-    textFont(lazerFont);
-    text(playerOne.playerToken, squareXXs[square], squareYYs[square]); //marking the square here doesn't work - this needs to change the way the board itself is drawn
     println("you got to markSquareX function");
     delay(500);
+    playerOnesTurn = false;
   }
 
   void markSquareO(int square_) {
     int square = square_;
     squareStates[square] = 2;
-    textSize(50);
-    textFont(lazerFont);
-    text(playerTwo.playerToken, squareXXs[square], squareYYs[square]);
+    playerOnesTurn = true;
   }
 
   void setGameBoardBackgroundColor(color bgCol_) { //setter for bg color
@@ -160,29 +157,32 @@ class GameBoard {
       textAlign(RIGHT);
       text("Please Wait...", width*.95, height*.1);
     } else {
-      textAlign(LEFT);
-      text("Your move", width*.95, height*.1);
       textAlign(RIGHT);
+      text("Your move", width*.95, height*.1);
+      textAlign(LEFT);
       text("Please Wait...", width*.05, height*.1);
     }
   } //end drawSCoreBoard
 
   void drawPlayedTokens() {
-    textFont(lazerFont);
-    textSize(40);
-    fill(playerOne.playerColor);
-
+    char marker = ' ';
     for (int i = 0; i < 9; i++) {
-      if (gameBoard.squareStates[i] ==1) {
-        text("1", this.squareXXs[i], this.squareYYs[i]);
-      } 
-      fill(playerTwo.playerColor);
-
-      if (gameBoard.squareStates[i] ==2) {
-        text("1", this.squareXXs[i], this.squareYYs[i]);
+      if (gameBoard.squareStates[i] == 0) {
+        marker= ' ';
+      } else if (gameBoard.squareStates[i] ==1) {
+        marker = 'X';
+        fill(playerOne.playerColor);
+      } else if (gameBoard.squareStates[i] ==2) {     
+        marker = 'O';
+        fill(playerTwo.playerColor);
       }
+      textFont(lazerFont);
+      textSize(50);
+      textMode(CENTER);
+      textAlign(CENTER,CENTER);
+      text(marker, width*squareXXs[i], height*squareYYs[i]);
     } //end for loops
-  } //end drawPlayedTokens
+  } //end drawplayedtokens
 } //end gameBoard class
 
 void keyPressed() {
@@ -190,3 +190,17 @@ void keyPressed() {
     gameBoard.playTokenOnSquare(gameBoard.squareHighlighted, playerOnesTurn);
   }
 } //end keypressed
+
+void drawTokenX(int xpos_, int ypos_) {
+  textFont(lazerFont);
+  textSize(40);
+  fill(playerOne.playerColor);
+  text(playerOne.playerToken, xpos_, ypos_);
+} //end drawTokemX
+
+void drawTokenY(int xpos_, int ypos_) {
+  textFont(lazerFont);
+  textSize(40);
+  fill(playerTwo.playerColor);
+  text(playerTwo.playerToken, xpos_, ypos_);
+} //end drawTokenY
