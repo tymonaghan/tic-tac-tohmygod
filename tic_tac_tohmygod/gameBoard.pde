@@ -150,7 +150,7 @@ class GameBoard {
     //add helper text under player names
     textFont(pixelFont);
     textSize(15);
-    fill(uiTextColor);
+    fill(colorScheme[3]);
     if (playerOnesTurn) {
       textAlign(LEFT);
       text("Your move", width*.05, height*.1);
@@ -184,12 +184,6 @@ class GameBoard {
     } //end for loops
   } //end drawplayedtokens
 } //end gameBoard class
-
-void keyPressed() {
-  if (gameState == 2 && key == ' ') {
-    gameBoard.playTokenOnSquare(gameBoard.squareHighlighted, playerOnesTurn);
-  }
-} //end keypressed
 
 void drawTokenX(int xpos_, int ypos_) {
   textFont(lazerFont);

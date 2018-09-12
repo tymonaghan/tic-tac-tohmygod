@@ -19,7 +19,6 @@ void playerSelection() { //player name, token, and color selection before gamepl
     text("Token", width*.25, height*.55);
     text("Color", width*.25, height*.7);
     highlightBox();
-    listenForKeypressPlayerSelection();
     if (itemSelected ==0) {
       playerNameEntry(1);
     } else if (itemSelected == 1) {
@@ -27,7 +26,9 @@ void playerSelection() { //player name, token, and color selection before gamepl
     } else if (itemSelected == 2) {
       playerColorSelect(1);
     }
-  } //if player one is not ready yet
+  }
+
+  //if player one is not ready yet
 }//end playerSelection
 
 void highlightBox() {
@@ -37,20 +38,6 @@ void highlightBox() {
   rectMode(CENTER);
   rect(width*.5, highlightBoxYOffset, width*.8, height*.15);
 } //end highlightBox
-
-void listenForKeypressPlayerSelection() {
-  if (keyPressed && ticker > 3) {
-    if (keyCode == UP && itemSelected > 0) {
-      decrementItemSelected();
-    } else if (keyCode == DOWN && itemSelected <2) {
-      incrementItemSelected();
-    } else if (key == ENTER) {
-      gameState=2; // i am setting this to 2:gameplay right now, but it should go back to 4:coin toss later
-      resetTicker();
-    }
-    resetTicker();
-  }
-}
 
 void incrementItemSelected() {
   itemSelected++;

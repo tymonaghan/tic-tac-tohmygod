@@ -19,7 +19,7 @@ void comingSoonBadge() { //show a red "COMING SOON" badge over the 1p option, wh
   if (singlePlayerGame) {
     pushMatrix();
     translate(width/2, height*.6);
-    rotate(3);
+    rotate(PI/8);
 
     pushStyle();
     textFont(pixelFont);
@@ -54,8 +54,8 @@ void displayMainMenu() { //the main menu once the fly-in is complete
   text("TIC - TAC - \n TOHMYGOD!", width*.5, height*.250);
   textSize(30);
   if (singlePlayerGame) {
-    //fill(255, 100, 255);
-    fill(255);  // don't highlight the selection when the COMING SOON badge is already there, leave it white
+    fill(255, 100, 255,100); //highlight the coming soon in a pale purple
+    //fill(255);  // don't highlight the selection when the COMING SOON badge is already there, leave it white
   } else {
     fill (255);
   } // end if /else for 1p game highlighted
@@ -68,7 +68,9 @@ void displayMainMenu() { //the main menu once the fly-in is complete
   } //end if/else for 2p game highlighted
   text("1P vs 2P", width/2, height*.75);
 
-  listenForKeypressMainMenu(); //there must be  a better way to handle input but this works for now
+  //drawUpDownArrows(int(width*.2),int(height*.9)); //hints to use arrow keys to navigate
+  
+  //listenForKeypressMainMenu(); //there must be  a better way to handle input but this works for now
 }
 
 
@@ -84,7 +86,7 @@ int titleColorFlasher() { //flash colors for main title.. could maybe use elsewh
   return returnColor;
 }//end titleColorFlasher
 
-
+/*
 void listenForKeypressMainMenu() {
   if (keyPressed == true && ticker >3) {
     ticker = 0;
@@ -99,7 +101,7 @@ void listenForKeypressMainMenu() {
     }//end if space or enter is pressed
   }//end if key is pressed
 } //end listenforKeypressMainMenu
-
+*/
 
 
 //========================================
