@@ -8,13 +8,15 @@ class Player {
   Player(boolean human_){
     isHuman = human_;
     playerName = "playername";
+    playerToken = 1;
   }
   
-  void takeTurn(){
+  void takeTurn(){ //start keeping track of and drawing which square the player has selected. listen for SPACE to confirm player square choice
      gameBoard.squareSelector();
      this.turnPreviewer();
   }
     
+    //shows a semi-transparent token to preview which square the player has selected
   void turnPreviewer(){
     fill(255,150);
     rectMode(CENTER);

@@ -90,7 +90,8 @@ class GameBoard {
 
     //if the square is already full, return an error
     if (checkIfSquareAvailable(squareToPlay) == false) { 
-      text("invalid move", 0, 0);
+      text("invalid move", width/2, height/2);
+      delay(350);
 
       //but if the square is available...
     } else {
@@ -105,11 +106,19 @@ class GameBoard {
   void markSquareX(int square_) {
     int square = square_;
     squareStates[square] = 1;
+    textSize(50);
+    textFont(lazerFont);
+    text(playerOne.playerToken, squareXXs[square], squareYYs[square]); //marking the square here doesn't work - this needs to change the way the board itself is drawn
+    println("you got to markSquareX function");
+    delay(500);
   }
 
   void markSquareO(int square_) {
     int square = square_;
     squareStates[square] = 2;
+    textSize(50);
+    textFont(lazerFont);
+    text(playerTwo.playerToken, squareXXs[square], squareYYs[square]);
   }
 
   void setGameBoardBackgroundColor(color bgCol_) { //setter for bg color
@@ -157,4 +166,27 @@ class GameBoard {
       text("Please Wait...", width*.05, height*.1);
     }
   } //end drawSCoreBoard
+
+  void drawPlayedTokens() {
+    textFont(lazerFont);
+    textSize(40);
+    fill(playerOne.playerColor);
+
+    for (int i = 0; i < 9; i++) {
+      if (gameBoard.squareStates[i] ==1) {
+        text("1", this.squareXXs[i], this.squareYYs[i]);
+      } 
+      fill(playerTwo.playerColor);
+
+      if (gameBoard.squareStates[i] ==2) {
+        text("1", this.squareXXs[i], this.squareYYs[i]);
+      }
+    } //end for loops
+  } //end drawPlayedTokens
 } //end gameBoard class
+
+void keyPressed() {
+  if (gameState == 2 && key == ' ') {
+    gameBoard.playTokenOnSquare(gameBoard.squareHighlighted, playerOnesTurn);
+  }
+} //end keypressed
