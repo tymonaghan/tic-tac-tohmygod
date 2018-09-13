@@ -5,46 +5,121 @@ void playerSelection() { //player name, token, and color selection before gamepl
     textSize(45);
     text("Player One", width/2, height *.15);
     textSize(35);
-    fill(playerOne.playerColor);
+    //fill(colorScheme[playerOne.playerColor]);
     text(playerOne.playerName, width/2, height*.25);
+    tint(colorScheme[playerOne.playerColor]);
+    image(tokenImages[playerOne.playerToken], width*.4+textWidth(playerOne.playerName), height *.24);
+    tint(255);
 
     textSize(30);
     fill(255);
-    text("Name", width*.25, height *.4);
+    text("Name", width*.225, height *.4);
     pushStyle();
     stroke(255);
     fill(150, 50);
     rect(width*.6, height*.4, width*.45, height*.085);
     popStyle();
-    text("Token", width*.25, height*.55);
-    text("Color", width*.25, height*.7);
-    highlightBox();
-    if (itemSelected ==0) {
-      playerNameEntry(1);
-    } else if (itemSelected == 1) {
-      playerTokenSelect(1);
-    } else if (itemSelected == 2) {
-      playerColorSelect(1);
-    }
-  }
 
-  //if player one is not ready yet
+    text("Token", width*.225, height*.55);
+    for (int i=0; i<6; i++) { //draw thw row of tokenImages[]
+      image(tokenImages[i], (width*.385)+55*i, height*.55, 45, 45);
+    } //end for-loop
+
+    text("Color", width*.225, height*.7);
+    rectMode(CENTER);
+    for (int j=0; j<6; j++) { //draw color swatches for player to pick from
+      fill(colorScheme[j]);
+      rect((width*.385)+55*j, height *.7, 45, 45);
+    }// end for-loop to draw color swatches
+
+    textAlign(CENTER);
+    fill(255);
+    text("Ready!", width/2, height*.9);
+
+    sectionHighlightBox(sectionSelected);
+    if (sectionSelected==1) {
+      playerOne.setPlayerToken(tokenHighlightBox());
+    } else if (sectionSelected == 2) {
+      playerOne.setPlayerColor(colorHighlightBox());
+    }// end if
+  }  //if player one is not ready yet
 }//end playerSelection
 
-void highlightBox() {
-  int highlightBoxYOffset = int(height*(0.4+(itemSelected * 0.15)));
-  stroke(255, 255, 100);
-  fill(255, 255, 100, 40);
-  rectMode(CENTER);
-  rect(width*.5, highlightBoxYOffset, width*.8, height*.15);
-} //end highlightBox
+void sectionHighlightBox(int selection_) {
+  int highlightBoxYOffset = int(height*(0.4+(selection_ * 0.15)));
+  if (selection_ == 3) {
+    pushStyle();
+    stroke(255, 255, 100);
+    strokeWeight(3);
+    fill(255, 255, 100, 40);
+    rect(width/2, height*.88, width/2, height*.1);
+    popStyle();
+  } else {
+    stroke(255, 255, 100);
+    fill(255, 255, 100, 5);
+    rectMode(CENTER);
+    rect(width*.5, highlightBoxYOffset, width*.8, height*.15);
+  }
+} //end sectionHighlightBox
 
-void incrementItemSelected() {
-  itemSelected++;
+color colorHighlightBox() {
+  pushStyle();
+  strokeWeight(2);
+  stroke(titleColorFlasher());
+  noFill();
+
+  rect((width*.385)+55*colorSelected, height *.7, 45, 45);
+  popStyle();
+  return colorSelected;
 }
 
-void decrementItemSelected() {
-  itemSelected--;
+int tokenHighlightBox() {
+   pushStyle();
+  strokeWeight(2);
+  stroke(titleColorFlasher());
+  noFill();
+
+  rect((width*.385)+55*tokenSelected, height *.55, 45, 45);
+  popStyle();
+  return tokenSelected;
+}
+
+void incrementsectionSelected() {
+  sectionSelected++;
+}
+
+void decrementsectionSelected() {
+  sectionSelected--;
+}
+
+void incrementColorSelected(){
+  if (colorSelected <5){
+  colorSelected++;
+  } else {
+    colorSelected = 0;
+  }
+}
+void decrementColorSelected() {
+  if (colorSelected >0){
+  colorSelected--;
+  } else {
+    colorSelected = 5;
+  }
+}
+
+void incrementTokenSelected(){
+  if (tokenSelected <5){
+  tokenSelected++;
+  } else {
+    tokenSelected = 0;
+  }
+}
+void decrementTokenSelected() {
+  if (tokenSelected >0){
+  tokenSelected--;
+  } else {
+    tokenSelected = 5;
+  }
 }
 
 void playerNameEntry(int playerNumber_) {

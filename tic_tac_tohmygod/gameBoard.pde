@@ -5,8 +5,6 @@ class GameBoard {
   color gameBoardBackgroundColor;
   int gameBoardLaserIntensity;
   int [] squareStates = new int[9];
-  //int[][] squareXs = new int[3][3];
-  //int[][] squareYs = new int[3][3];  2d array makes more visual sense but is more challenging to code so keeping with 1d arrays for now
   float[] squareXXs = new float[9];
   float[] squareYYs = new float[9];
   int squareHighlighted = 4;
@@ -140,17 +138,17 @@ class GameBoard {
   void drawScoreBoard() {  //scoreboard - player names and win counts
     textFont(lazerFont);
     textSize(15);
-    fill(playerOne.playerColor);
+    fill(colorScheme[playerOne.playerColor]);
     textAlign(LEFT);
     text(playerOne.playerName, width*.05, height*.05); //draw p1 name
-    fill(playerTwo.playerColor);
+    fill(colorScheme[playerTwo.playerColor]);
     textAlign(RIGHT);
     text(playerTwo.playerName, width*.95, height*.05); //draw p2 name
 
     //add helper text under player names
     textFont(pixelFont);
     textSize(15);
-    fill(colorScheme[3]);
+    fill(colorScheme[5]);
     if (playerOnesTurn) {
       textAlign(LEFT);
       text("Your move", width*.05, height*.1);
@@ -171,10 +169,10 @@ class GameBoard {
         marker= ' ';
       } else if (gameBoard.squareStates[i] ==1) {
         marker = 'X';
-        fill(playerOne.playerColor);
+        fill(colorScheme[playerOne.playerColor]);
       } else if (gameBoard.squareStates[i] ==2) {     
         marker = 'O';
-        fill(playerTwo.playerColor);
+        fill(colorScheme[playerTwo.playerColor]);
       }
       textFont(lazerFont);
       textSize(50);
@@ -188,7 +186,7 @@ class GameBoard {
 void drawTokenX(int xpos_, int ypos_) {
   textFont(lazerFont);
   textSize(40);
-  fill(playerOne.playerColor);
+  fill(colorScheme[playerOne.playerColor]);
   text(playerOne.playerToken, xpos_, ypos_);
 } //end drawTokemX
 

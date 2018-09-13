@@ -4,7 +4,9 @@ SoundFile menuMusic;
 int gameState = 0;
 int ticker = 0;
 int runTimeTicker = 0;
-int itemSelected = 0;
+int sectionSelected = 0;
+int colorSelected = 0;
+int tokenSelected = 0;
 int characterCount = 0;
 PFont lazerFont;
 PFont pixelFont;
@@ -16,30 +18,15 @@ boolean playerOnesTurn = true;
 Player playerOne, playerTwo;
 GameBoard gameBoard;
 char[] playerNameChars = new char[0];
-
-color[] colorScheme = new color[6];
+color[] colorScheme = new color[8];
 PImage[] tokenImages = new PImage[6];
 
 
 
 void setup() {
   size(600, 600);
-  lazerFont = createFont("Lazer84.ttf", 32);
-  pixelFont = createFont("pixel.otf", 30);
-  textFont(lazerFont);
-  textAlign(CENTER, CENTER);
   frameRate(20);
-  menuMusic= new SoundFile (this, "Protovision.wav");
-  gameBoard = new GameBoard(color(255, 150, 255), 1);
-  colorScheme[0] = color(#F9FA00); //yellow
-  colorScheme[1]= color(#00FAE3); //teal
-  colorScheme[2] = color(#FA00D9); //pink-magenta
-  colorScheme[3] =  color(255); // white
-  colorScheme[4] = color(0); //black
-  colorScheme[5] = color(155); //gray
-  for (int i = 0; i < 6; i++) {
-    tokenImages[i] = loadImage("image"+i+".png");
-  }
+  initializeObjectsAndArrays();
 }
 
 static class EGameState // assign gamestates to ints
@@ -122,10 +109,10 @@ void keyPressed() {
       if (keyCode == UP || keyCode == DOWN) {
         singlePlayerGame = !singlePlayerGame;
       } else if (key == ' ' || key == ENTER) { //end if up or down is pressed, begin if space or enter is pressed
-        playerOne = new Player(true);
-        playerTwo = new Player(!singlePlayerGame);
-        playerOne.setPlayerColor(color(255, 100, 100));
-        playerTwo.setPlayerColor(color(100, 255, 100));
+      playerOne = new Player(true);
+  playerTwo = new Player(!singlePlayerGame);
+  playerOne.setPlayerColor(3);
+  playerTwo.setPlayerColor(4);
         gameState=1;
       }//end if space or enter is pressed
     }//end if key is pressed
@@ -134,14 +121,27 @@ void keyPressed() {
   case EGameState.playerSelection:
     if (ticker >3) {
       resetTicker();
-      if (keyCode == UP && itemSelected > 0) {
-        decrementItemSelected();
-      } else if (keyCode == DOWN && itemSelected <2) {
-        incrementItemSelected();
+      if (keyCode == UP && sectionSelected > 0) {
+        decrementsectionSelected();
+      } else if (keyCode == DOWN && sectionSelected <3) {
+        incrementsectionSelected();
       } else if (key == ENTER) {
         gameState=2; // i am setting this to 2:gameplay right now, but it should go back to 4:coin toss later
+      } else if (keyCode == LEFT) {
+        if (sectionSelected==1) {
+          decrementTokenSelected();
+        } else if (sectionSelected==2) {
+          decrementColorSelected();
+        }
+      } else if (keyCode == RIGHT) {
+        if (sectionSelected==1) {
+          incrementTokenSelected();
+        } else if (sectionSelected == 2 ) {
+          incrementColorSelected();
+        }
       }
-    }
+    } //end if ticker >3 -- do everything in here to prevent double-presses
+    break;
 
   case EGameState.gameplay:
     if (key == ' ') {
@@ -158,3 +158,25 @@ void keyPressed() {
     }
   } //end switch
 } //end keypressed
+
+void initializeObjectsAndArrays() {
+  lazerFont = createFont("Lazer84.ttf", 32);
+  pixelFont = createFont("pixel.otf", 30);
+  textFont(lazerFont);
+  textAlign(CENTER, CENTER);
+  menuMusic= new SoundFile (this, "Protovision.wav");
+  gameBoard = new GameBoard(color(255, 150, 255), 1);
+  colorScheme[0] = color(250,250,0); //yellow
+  colorScheme[1]= color(0,250,250); //teal
+  colorScheme[2] = color(250,0,250); //pink-magenta
+  colorScheme[3] = color(255, 100, 100); //red
+  colorScheme[4] = color(100, 255, 100); //green
+  colorScheme[5] =  color(255); // white
+  colorScheme[6] = color(0); //black
+  colorScheme[7] = color(155); //gray
+  for (int i = 0; i < 6; i++) {
+    tokenImages[i] = loadImage("image"+i+".png");
+  }
+      imageMode(CENTER);
+
+} //end initializeObjectsandArrays

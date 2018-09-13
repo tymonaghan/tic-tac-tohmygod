@@ -86,22 +86,7 @@ int titleColorFlasher() { //flash colors for main title.. could maybe use elsewh
   return returnColor;
 }//end titleColorFlasher
 
-/*
-void listenForKeypressMainMenu() {
-  if (keyPressed == true && ticker >3) {
-    ticker = 0;
-    if (keyCode == UP || keyCode == DOWN) {
-      singlePlayerGame = !singlePlayerGame;
-    } else if (key == ' ' || key == ENTER) { //end if up or down is pressed, begin if space or enter is pressed
-      playerOne = new Player(true);
-      playerTwo = new Player(!singlePlayerGame);
-      playerOne.setPlayerColor(color(255, 100, 100));
-      playerTwo.setPlayerColor(color(100, 255, 100));
-      gameState=1;
-    }//end if space or enter is pressed
-  }//end if key is pressed
-} //end listenforKeypressMainMenu
-*/
+
 
 
 //========================================
