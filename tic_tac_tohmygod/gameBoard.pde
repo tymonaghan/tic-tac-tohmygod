@@ -176,8 +176,7 @@ class GameBoard {
       }
       textFont(lazerFont);
       textSize(50);
-      textMode(CENTER);
-      textAlign(CENTER,CENTER);
+      textAlign(CENTER, CENTER);
       text(marker, width*squareXXs[i], height*squareYYs[i]);
     } //end for loops
   } //end drawplayedtokens

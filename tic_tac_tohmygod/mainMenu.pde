@@ -32,7 +32,7 @@ void comingSoonBadge() { //show a red "COMING SOON" badge over the 1p option, wh
     strokeWeight(3);
     noFill();
     rect(0, -5, textWidth("Coming Soon")+5, 25);
-    
+
     popStyle();
     popMatrix();
     //I can't quite get this to rotate the way i want it to..
@@ -54,7 +54,7 @@ void displayMainMenu() { //the main menu once the fly-in is complete
   text("TIC - TAC - \n TOHMYGOD!", width*.5, height*.250);
   textSize(30);
   if (singlePlayerGame) {
-    fill(255, 100, 255,100); //highlight the coming soon in a pale purple
+    fill(255, 100, 255, 100); //highlight the coming soon in a pale purple
     //fill(255);  // don't highlight the selection when the COMING SOON badge is already there, leave it white
   } else {
     fill (255);
@@ -69,7 +69,7 @@ void displayMainMenu() { //the main menu once the fly-in is complete
   text("1P vs 2P", width/2, height*.75);
 
   //drawUpDownArrows(int(width*.2),int(height*.9)); //hints to use arrow keys to navigate
-  
+
   //listenForKeypressMainMenu(); //there must be  a better way to handle input but this works for now
 }
 
@@ -85,31 +85,3 @@ int titleColorFlasher() { //flash colors for main title.. could maybe use elsewh
   } 
   return returnColor;
 }//end titleColorFlasher
-
-
-
-
-//========================================
-//==========COIN TOSS =====================
-void coinToss() { //toss a virtual coin to determine who goes first (is "X"). untested
-  fill(255);
-  background(35);
-  text("tossing coin \nto determine play order\n\n\n"+playerOne.playerName+" select", width/2, height*.33);
-
-  rectMode(CENTER);
-  fill(255, 255, 100);
-  rect(width*.3, height *.75, width*.25, height*.10);
-  fill(0);
-  text("HEADS", width*.3, height*.75);
-
-  fill(255, 255, 225);
-  rect(width*.7, height*.75, width*.25, height*.10);
-  fill(0);
-  text("TAILS", width*.7, height*.75);
-
-  if (keyPressed && ticker >3) {
-    if (key == ENTER) {
-      gameState=2;
-    } //end if ENTER pressed
-  } //end if keypressed
-} //end coin toss

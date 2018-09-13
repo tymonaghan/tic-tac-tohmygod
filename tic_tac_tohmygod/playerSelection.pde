@@ -74,7 +74,7 @@ color colorHighlightBox() {
 }
 
 int tokenHighlightBox() {
-   pushStyle();
+  pushStyle();
   strokeWeight(2);
   stroke(titleColorFlasher());
   noFill();
@@ -92,31 +92,31 @@ void decrementsectionSelected() {
   sectionSelected--;
 }
 
-void incrementColorSelected(){
-  if (colorSelected <5){
-  colorSelected++;
+void incrementColorSelected() {
+  if (colorSelected <5) {
+    colorSelected++;
   } else {
     colorSelected = 0;
   }
 }
 void decrementColorSelected() {
-  if (colorSelected >0){
-  colorSelected--;
+  if (colorSelected >0) {
+    colorSelected--;
   } else {
     colorSelected = 5;
   }
 }
 
-void incrementTokenSelected(){
-  if (tokenSelected <5){
-  tokenSelected++;
+void incrementTokenSelected() {
+  if (tokenSelected <5) {
+    tokenSelected++;
   } else {
     tokenSelected = 0;
   }
 }
 void decrementTokenSelected() {
-  if (tokenSelected >0){
-  tokenSelected--;
+  if (tokenSelected >0) {
+    tokenSelected--;
   } else {
     tokenSelected = 5;
   }
