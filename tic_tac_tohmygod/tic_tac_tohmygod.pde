@@ -1,7 +1,7 @@
 import processing.sound.*; //<>//
 SoundFile menuMusic;
 Player playerOne, playerTwo;
-GameBoard gameBoard;
+GameBoard gameBoard, metaGameBoard;
 PFont lazerFont;
 PFont pixelFont;
 PImage[] tokenImages = new PImage[6];
@@ -120,6 +120,7 @@ void initializeObjectsAndArrays() {
   textAlign(CENTER, CENTER);
   menuMusic= new SoundFile (this, "Protovision.wav");
   gameBoard = new GameBoard(color(255, 150, 255), 1);
+  metaGameBoard = new GameBoard();
   colorScheme[0] = color(250, 250, 0); //yellow
   colorScheme[1]= color(0, 250, 250); //teal
   colorScheme[2] = color(250, 0, 250); //pink-magenta

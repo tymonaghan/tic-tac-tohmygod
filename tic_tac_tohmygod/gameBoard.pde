@@ -35,6 +35,20 @@ class GameBoard {
     gameBoardBackgroundColor = 45;
     gameBoardLaserIntensity = 1;
   }
+  
+  GameBoard() { //construct the meta-game board
+  for (int i = 0; i <9; i++) { //initialize the square states array to all 0s - unplayed board
+      squareStates[i] = 0;
+    } //end for loop to initialize square states array
+
+    for (int xx = 0; xx < 9; xx++) { //initialize the squareXXs array
+      squareXXs[xx] = 0.25+(0.25*(xx%3));
+    }
+
+    for (int yy = 0; yy < 9; yy++) { //initialize the squareYYs array
+      squareYYs[yy] = 0.25 +(int(yy/3)*.25);
+    }
+  }
 
   void drawGridLines() {
     stroke(gridLinesColor);  
