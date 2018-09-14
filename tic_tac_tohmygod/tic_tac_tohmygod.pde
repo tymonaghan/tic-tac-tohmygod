@@ -16,7 +16,7 @@ int colorSelected = 0;
 int tokenSelected = 0;
 int characterCount = 0;
 int coinTossFallCounter = 0;
-boolean singlePlayerGame = true;
+boolean singlePlayerGame = false;
 boolean firstRun = true;
 boolean keysHaveBeenPressed = false;
 boolean playerOneReady = false;
@@ -134,4 +134,10 @@ void initializeObjectsAndArrays() {
     tokenImages[i] = loadImage("image"+i+".png");
   }
   imageMode(CENTER);
+  playerOne = new Player(true);
+  playerOne.setPlayerColor(0);
+
+  playerTwo = new Player(!singlePlayerGame);
+  playerTwo.setPlayerColor(1);
+  playerTwo.setPlayerName("P2");
 } //end initializeObjectsandArrays

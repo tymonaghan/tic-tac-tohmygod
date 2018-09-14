@@ -7,11 +7,13 @@ void keyPressed() {
     if (keyCode == UP || keyCode == DOWN) { //if UP-DOWN, toggle the menu selection
       singlePlayerGame = !singlePlayerGame;
     } else if (key == ' ' || key == ENTER) { //if SPACE or ENTER, init characters and go to characterselectionmenu
-      playerOne = new Player(true);
-      playerTwo = new Player(!singlePlayerGame);
-      playerOne.setPlayerColor(0);
-      playerTwo.setPlayerColor(1);
-      playerTwo.setPlayerName("P2");
+      /* moving the initialization of players into setup
+       playerOne = new Player(true);
+       playerTwo = new Player(!singlePlayerGame);
+       playerOne.setPlayerColor(0);
+       playerTwo.setPlayerColor(1);
+       playerTwo.setPlayerName("P2");
+       */
       gameState=1;
     } else if ( key == 'o' || key == 'O') { //if O, open options menu
       gameState = 5;
@@ -23,7 +25,18 @@ void keyPressed() {
 
   case EGameState.playerSelection:
     if (sectionSelected==3 && key == ENTER) {
-      gameState=4;
+      if (!playerOneReady) {
+        sectionSelected=0;
+        if (playerOne.playerColor==1) {
+          playerTwo.setPlayerColor(0);
+        }
+        if (playerOne.playerToken==0) {
+          playerTwo.setPlayerToken(1);
+        }
+        playerOneReady = true;
+      } else {
+        gameState=4;
+      }
     } else if (sectionSelected == 0) {
       //playerNameChars[] = append(playerNameChars, key);
     } // end name section
