@@ -5,11 +5,13 @@ void playerSelection() { //player name, token, and color selection before gamepl
     textSize(45);
     text("Player One", width/2, height *.15);
     playerOne.showCustomizationMenu();
+    playerOne.collectPlayerName();
   } else {   //if player one is not ready yet
     fill(255);
     textSize(45);
     text("Player Two", width/2, height *.15);
     playerTwo.showCustomizationMenu();
+    playerTwo.collectPlayerName();
   }
 }//end playerSelection
 

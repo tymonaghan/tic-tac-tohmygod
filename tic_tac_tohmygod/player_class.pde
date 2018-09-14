@@ -67,9 +67,15 @@ class Player {
     fill(150, 50);
     rect(width*.6, height*.4, width*.45, height*.085);
     fill(255);
+    pushStyle();
+    textFont(pixelFont);
+    textSize(12);
+    textAlign(RIGHT);
+    //text("press ENTER\nto confirm",width*.85, height*.4);
+    popStyle();
     for (int i = 0; i < this.playerNameCharsTyped; i++) { //write the players name in the box as they type    
       textAlign(LEFT);
-      text(playerNameChars[i], width*.4+i*textWidth(playerNameChars[this.playerNameCharsTyped])+3, height*.415);
+      text(this.playerName, width*.4, height*.415);
     }
     popStyle();
 

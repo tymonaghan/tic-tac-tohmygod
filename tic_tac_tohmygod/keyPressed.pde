@@ -42,7 +42,7 @@ void keyPressed() {
         if (key == BACKSPACE || key == DELETE) {
           playerOne.resetPlayerNameChars();
         } else if (key == ENTER) {
-          playerOne.collectPlayerName();
+          //playerOne.collectPlayerName();
         } else {
           if (playerOne.playerNameCharsTyped < playerNameChars.length) {
             playerNameChars[playerOne.playerNameCharsTyped] = key;
@@ -53,7 +53,7 @@ void keyPressed() {
         if (key == BACKSPACE || key == DELETE) {
           playerTwo.resetPlayerNameChars();
         } else if (key == ENTER) {
-          playerTwo.collectPlayerName();
+          //playerTwo.collectPlayerName();
         } else {
           if (playerTwo.playerNameCharsTyped < playerNameChars.length) {
             playerNameChars[playerTwo.playerNameCharsTyped] = key;
@@ -61,7 +61,6 @@ void keyPressed() {
           }
         }
       }
-      println(playerNameChars);
     } // end name section
     //------------------------------------------end name block
 
