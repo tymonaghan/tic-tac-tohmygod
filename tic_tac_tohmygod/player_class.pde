@@ -12,7 +12,7 @@ class Player {
   }
 
   void takeTurn() { //start keeping track of and drawing which square the player has selected. 
-    gameBoard.squareSelector();
+    //gameBoard.squareSelector();
     this.turnPreviewer();
   }
 
@@ -43,4 +43,8 @@ class Player {
   void setPlayerToken (int token_) {
     playerToken = token_;
   } //end set player token
+
+  void awardMatchVictory() {
+    victories++;
+  }
 } //end Player class

@@ -67,7 +67,12 @@ void displayMainMenu() { //the main menu once the fly-in is complete
     fill(255);
   } //end if/else for 2p game highlighted
   text("1P vs 2P", width/2, height*.75);
-
+  pushStyle();
+  textFont(pixelFont);
+  fill(255);
+  textSize(15);
+  text("press O for options - press h anytime for help", width/2, height*.9);
+  popStyle();
   //drawUpDownArrows(int(width*.2),int(height*.9)); //hints to use arrow keys to navigate
 
   //listenForKeypressMainMenu(); //there must be  a better way to handle input but this works for now

@@ -121,32 +121,3 @@ void decrementTokenSelected() {
     tokenSelected = 5;
   }
 }
-
-void playerNameEntry(int playerNumber_) {
-
-  listenForKeypressPlayerName();
-}
-
-void listenForKeypressPlayerName() {
-  if (keyPressed == true && ticker >3) {
-    if (key == ENTER) {
-      //String namestring = str(playerNameChars);
-      println("player name char array:"+playerNameChars);
-    } else {//end if ENTER is pressed
-      /*playerNameChars[characterCount] = key;
-       playerNameChars = append (playerNameChars, key);
-       if (playerNumber_ == 1) {
-       playerOne.setPlayerName(namestring);
-       } else if (playerNumber_ ==2) {
-       playerTwo.setPlayerName(namestring);
-       }*/
-      resetTicker();
-    }
-  }// end if key pressed
-} //end listenforKeypressPlayerName
-
-void playerTokenSelect(int playerNumber_) {
-}
-
-void playerColorSelect(int playerNumber_) {
-}

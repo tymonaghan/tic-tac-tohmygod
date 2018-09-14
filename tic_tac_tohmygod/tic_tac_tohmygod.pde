@@ -1,7 +1,14 @@
 import processing.sound.*; //<>//
 SoundFile menuMusic;
-
+Player playerOne, playerTwo;
+GameBoard gameBoard;
+PFont lazerFont;
+PFont pixelFont;
+PImage[] tokenImages = new PImage[6];
+char[] playerNameChars = new char[0];
+color[] colorScheme = new color[8];
 int gameState = 0;
+int previousGameState;
 int ticker = 0;
 int runTimeTicker = 0;
 int sectionSelected = 0;
@@ -9,8 +16,6 @@ int colorSelected = 0;
 int tokenSelected = 0;
 int characterCount = 0;
 int coinTossFallCounter = 0;
-PFont lazerFont;
-PFont pixelFont;
 boolean singlePlayerGame = true;
 boolean firstRun = true;
 boolean keysHaveBeenPressed = false;
@@ -21,12 +26,8 @@ boolean coinPickLockedIn = false;
 boolean itsHeads = true;
 boolean coinTossComplete = false;
 boolean drawCoinShowingHeads=true;
-Player playerOne, playerTwo;
-GameBoard gameBoard;
-char[] playerNameChars = new char[0];
-color[] colorScheme = new color[8];
-PImage[] tokenImages = new PImage[6];
-
+boolean delayGame = false;
+boolean gameOver = false;
 
 
 void setup() {
@@ -68,12 +69,20 @@ void draw() {
   case EGameState.helpPopup:
     helpPopup();
     break;
+
+  case EGameState.optionsMenu:
+
+    break;
   } //end gameState switch
 
   //the rest of draw just contains counters and the function for controlling game music
   ticker++;
   runTimeTicker++;
   musicManager();
+  if (delayGame) {
+    delay(500);
+    delayGame=false;
+  }
   //println(gameBoard.squareStates);
 } //end draw
 
@@ -105,82 +114,6 @@ void musicManager() {  //this is overly complicated because i tried to make the 
     //menuMusic.play();
   } //to loop menu music from the 5 second mark (skipping fade in)
 } //end music manager
-
-void keyPressed() {
-  switch (gameState) {
-
-  case EGameState.mainMenu:
-    if (ticker>3) {  
-      ticker = 0;
-      if (keyCode == UP || keyCode == DOWN) {
-        singlePlayerGame = !singlePlayerGame;
-      } else if (key == ' ' || key == ENTER) { //end if up or down is pressed, begin if space or enter is pressed
-        playerOne = new Player(true);
-        playerTwo = new Player(!singlePlayerGame);
-        playerOne.setPlayerColor(3);
-        playerTwo.setPlayerColor(4);
-        playerTwo.setPlayerName("P2");
-        gameState=1;
-      }//end if space or enter is pressed
-    }//end if key is pressed
-    break;
-
-  case EGameState.playerSelection:
-    if (ticker >3) {
-      resetTicker();
-      if (keyCode == UP && sectionSelected > 0) {
-        decrementsectionSelected();
-      } else if (keyCode == DOWN && sectionSelected <3) {
-        incrementsectionSelected();
-      } else if (key == ENTER) {
-        gameState=4; // i am setting this to 2:gameplay right now, but it should go back to 4:coin toss later
-      } else if (keyCode == LEFT) {
-        if (sectionSelected==1) {
-          decrementTokenSelected();
-        } else if (sectionSelected==2) {
-          decrementColorSelected();
-        }
-      } else if (keyCode == RIGHT) {
-        if (sectionSelected==1) {
-          incrementTokenSelected();
-        } else if (sectionSelected == 2 ) {
-          incrementColorSelected();
-        }
-      }
-    } //end if ticker >3 -- do everything in here to prevent double-presses
-    break;
-
-  case EGameState.coinToss:
-    if (ticker>3) {
-      resetTicker();
-      if (keyCode == LEFT || keyCode == RIGHT) {
-        playerOnePicksHeads = !playerOnePicksHeads;
-      } else if (key == ENTER) {
-        if (!coinPickLockedIn) {
-          coinPickLockedIn = true;
-        } else {
-          gameState = 2;
-        }
-      }
-    }
-
-    break;
-
-  case EGameState.gameplay:
-    if (key == ' ') {
-      gameBoard.playTokenOnSquare(gameBoard.squareHighlighted, playerOnesTurn);
-    } 
-    if (key == 'h' || key == 'H') {
-      gameState = 6;
-    }
-    break;
-
-  case EGameState.helpPopup:
-    if (key==' '||key==ENTER||key==RETURN) {
-      gameState=2;
-    }
-  } //end switch
-} //end keypressed
 
 void initializeObjectsAndArrays() {
   lazerFont = createFont("Lazer84.ttf", 32);

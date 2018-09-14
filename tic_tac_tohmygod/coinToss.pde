@@ -1,4 +1,4 @@
-void coinToss() { //toss a virtual coin to determine who goes first (is "X"). untested
+void coinToss() { //toss a virtual coin to determine who goes first (is "X").
   fill(255);
   background(35);
   if (!coinPickLockedIn) { //before the player picks heads or tails, show the selection menu.
@@ -14,7 +14,7 @@ void coinToss() { //toss a virtual coin to determine who goes first (is "X"). un
     fill(0);
     text("HEADS", width*.3, height*.75);
 
-    if (!playerOnePicksHeads) {
+    if (!playerOnePicksHeads) {//TAILS button
       fill(colorScheme[0]);
     } else {
       fill (colorScheme[0], 100);

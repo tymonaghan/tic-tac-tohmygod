@@ -49,19 +49,6 @@ class GameBoard {
   void squareSelector() { // the player uses LEFT and RIGHT arrows to cycle through the squares on the game board
     if (keyPressed == true && ticker > 3) {
       resetTicker();
-      if (key == CODED && keyCode == LEFT) {
-        if (squareHighlighted < 1) {
-          this.setHighlightedSquare(8);
-        } else {
-          squareHighlighted--;
-        }
-      } else if (key == CODED && keyCode == RIGHT) {
-        if (squareHighlighted > 7) {
-          this.setHighlightedSquare(0);
-        } else {
-          squareHighlighted++;
-        }
-      }
     }
   }
 
@@ -89,9 +76,16 @@ class GameBoard {
 
     //if the square is already full, return an error
     if (checkIfSquareAvailable(squareToPlay) == false) { 
+      stroke(0);
+      fill(255);
+      strokeWeight(3);
+      textFont(pixelFont);
+      textAlign(CENTER, CENTER);
+      textSize(20);
+      rect(width/2, height/2, textWidth("invalid move"), 25);
+      fill(0);
       text("invalid move", width/2, height/2);
-      delay(350);
-
+      delayGame=true;
       //but if the square is available...
     } else {
       if (playerOnesTurn) {
@@ -105,8 +99,7 @@ class GameBoard {
   void markSquareX(int square_) {
     int square = square_;
     squareStates[square] = 1;
-    println("you got to markSquareX function");
-    delay(500);
+    delayGame=true;
     playerOnesTurn = false;
   }
 
@@ -160,38 +153,91 @@ class GameBoard {
       textAlign(LEFT);
       text("Please Wait...", width*.05, height*.1);
     }
+
+    //add player tokens to keep track of wins
+    for (int i=0; i<playerOne.victories; i++) {
+      image(tokenImages[playerOne.playerToken], 20+(25*i), height*.15, 20, 20);
+    }
+    for (int i=0; i<playerTwo.victories; i++) {
+      image(tokenImages[playerTwo.playerToken], (width-20)-(25*i), height*.15, 25, 25);
+    }
   } //end drawSCoreBoard
 
   void drawPlayedTokens() {
     char marker = ' ';
     for (int i = 0; i < 9; i++) {
       if (gameBoard.squareStates[i] == 0) {
-        marker= ' ';
+
+        //marker= ' ';
       } else if (gameBoard.squareStates[i] ==1) {
-        marker = 'X';
-        fill(colorScheme[playerOne.playerColor]);
+        tint(colorScheme[playerOne.playerColor]);
+        image(tokenImages[playerOne.playerToken], width*squareXXs[i], height*squareYYs[i]);
+        //marker = 'X';
+        //fill(colorScheme[playerOne.playerColor]);
       } else if (gameBoard.squareStates[i] ==2) {     
-        marker = 'O';
-        fill(colorScheme[playerTwo.playerColor]);
+        tint(colorScheme[playerTwo.playerColor]);
+        image(tokenImages[playerTwo.playerToken], width*squareXXs[i], height*squareYYs[i]);
+        //marker = 'O';
+        //fill(colorScheme[playerTwo.playerColor]);
       }
-      textFont(lazerFont);
-      textSize(50);
-      textAlign(CENTER, CENTER);
-      text(marker, width*squareXXs[i], height*squareYYs[i]);
+      //textFont(lazerFont);
+      //textSize(50);
+      //textAlign(CENTER, CENTER);
+      // text(marker, width*squareXXs[i], height*squareYYs[i]);
     } //end for loops
   } //end drawplayedtokens
-} //end gameBoard class
 
-void drawTokenX(int xpos_, int ypos_) {
-  textFont(lazerFont);
-  textSize(40);
-  fill(colorScheme[playerOne.playerColor]);
-  text(playerOne.playerToken, xpos_, ypos_);
-} //end drawTokemX
+  void checkForWinner() {
+    if (squareStates[0]!=0&&squareStates[0] == squareStates[1] &&squareStates[1]==squareStates[2]) { //top row
+      println("Win detected");
+      assignWin(squareStates[0]);
+    } else if (squareStates[3]!=0&&squareStates[3] == squareStates[4] &&squareStates[4]==squareStates[5]) { //mid row
+      println("Win detected");
+      assignWin(squareStates[3]);
+    } else  if (squareStates[6]!=0&&squareStates[6] == squareStates[7] &&squareStates[7]==squareStates[8]) { //bottom row
+      println("Win detected");
+      assignWin(squareStates[7]);
+    } else  if (squareStates[0]!=0&&squareStates[0] == squareStates[3] &&squareStates[3]==squareStates[6]) { //left col
+      println("Win detected");
+      assignWin(squareStates[0]);
+    } else  if (squareStates[1]!=0&&squareStates[1] == squareStates[4] &&squareStates[4]==squareStates[7]) { //mid col
+      println("Win detected");
+      assignWin(squareStates[1]);
+    } else  if (squareStates[2]!=0&&squareStates[2] == squareStates[5] &&squareStates[5]==squareStates[8]) { //right col
+      println("Win detected");
+      assignWin(squareStates[2]);
+    }
+  }
 
-void drawTokenY(int xpos_, int ypos_) {
-  textFont(lazerFont);
-  textSize(40);
-  fill(playerTwo.playerColor);
-  text(playerTwo.playerToken, xpos_, ypos_);
-} //end drawTokenY
+  void assignWin(int player_) {
+    resetBoard();
+    if (player_ == 1) {
+      playerOne.awardMatchVictory();
+    } else if (player_ == 2) {
+      playerTwo.awardMatchVictory();
+    }
+  } 
+
+  void resetBoard() { //clear the board: reset squareStates to all 0s
+    for (int i = 0; i <9; i++) {
+      squareStates[i]=0;
+    }
+  }//end resetBoard
+}//end GameBoard class
+
+
+/*
+  void drawTokenX(int xpos_, int ypos_) {
+ textFont(lazerFont);
+ textSize(40);
+ fill(colorScheme[playerOne.playerColor]);
+ image(tokenImages[playerTwo.playerToken], xpos_, ypos_);
+ } //end drawTokemX
+ 
+ void drawTokenY(int xpos_, int ypos_) {
+ textFont(lazerFont);
+ textSize(40);
+ fill(playerTwo.playerColor);
+ image(tokenImages[playerTwo.playerToken], xpos_, ypos_);
+ } //end drawTokenY
+ */

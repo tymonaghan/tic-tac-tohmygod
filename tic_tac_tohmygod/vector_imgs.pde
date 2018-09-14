@@ -89,7 +89,6 @@ void coinSpinningHeads(int xpos_, int ypos_) {
 void coinSpinningTails(int xpos_, int ypos_) {
   int xpos = xpos_;
   int ypos = ypos_;
-
   pushStyle();
   fill(0);
   image(tokenImages[playerTwo.playerToken], xpos, ypos, 45, 45);
