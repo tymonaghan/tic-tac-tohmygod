@@ -37,10 +37,33 @@ void keyPressed() {
       } else {
         gameState=4;
       }
-    } else if (sectionSelected == 0) {
-      //playerNameChars[] = append(playerNameChars, key);
+    } else if (sectionSelected == 0) {  //--------------------------begin name block
+      if (!playerOneReady) { // controls typing and erasing name for P1
+        if (key == BACKSPACE || key == DELETE) {
+          playerOne.resetPlayerNameChars();
+        } else if (key == ENTER) {
+          playerOne.collectPlayerName();
+        } else {
+          if (playerOne.playerNameCharsTyped < playerNameChars.length) {
+            playerNameChars[playerOne.playerNameCharsTyped] = key;
+            playerOne.incrementPlayerNameChars();
+          }
+        }
+      } else { //control typing and erasing name for P2
+        if (key == BACKSPACE || key == DELETE) {
+          playerTwo.resetPlayerNameChars();
+        } else if (key == ENTER) {
+          playerTwo.collectPlayerName();
+        } else {
+          if (playerTwo.playerNameCharsTyped < playerNameChars.length) {
+            playerNameChars[playerTwo.playerNameCharsTyped] = key;
+            playerTwo.incrementPlayerNameChars();
+          }
+        }
+      }
+      println(playerNameChars);
     } // end name section
-
+    //------------------------------------------end name block
 
 
     if (keyCode == UP && sectionSelected > 0) { // UP moves the menu up
@@ -64,8 +87,10 @@ void keyPressed() {
 
   case EGameState.coinToss:
 
-    if (keyCode == LEFT || keyCode == RIGHT) {
-      playerOnePicksHeads = !playerOnePicksHeads;
+    if (keyCode == LEFT || keyCode == RIGHT ) {
+      if (!coinPickLockedIn) {
+        playerOnePicksHeads = !playerOnePicksHeads;
+      }
     } else if (key == 'h' || key == 'H') {
       previousGameState=4;
       gameState = 6;

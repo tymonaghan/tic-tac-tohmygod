@@ -4,7 +4,7 @@ void mainMenu() {
   //one-time functions at the beginning of main menu
 
   background(0);
-  if (!keysHaveBeenPressed && runTimeTicker<100) { //if the program has just started and no keys have been pressed, let the main title fly in
+  if (!keysHaveBeenPressed && frameCount<100) { //if the program has just started and no keys have been pressed, let the main title fly in
     titleMenuSlideIn(titleXPosition, titleFlyinSpeed);
   } else { //if the title has finished flying in or keys have been pressed, show and flash the title
     displayMainMenu();
@@ -43,7 +43,7 @@ void titleMenuSlideIn(int xPos_, int speed_) {  //initial main title fly-in
   int xPosition = xPos_;
   int speed = speed_;
   textSize(50);
-  fill(runTimeTicker);
+  fill(frameCount);
   text("TIC - TAC - \n TOHMYGOD!", xPosition+speed, height*.250);
 } //emd titleMenuSlideIn
 

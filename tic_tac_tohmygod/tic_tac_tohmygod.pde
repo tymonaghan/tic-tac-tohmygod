@@ -5,12 +5,11 @@ GameBoard gameBoard;
 PFont lazerFont;
 PFont pixelFont;
 PImage[] tokenImages = new PImage[6];
-char[] playerNameChars = new char[0];
+char[] playerNameChars = new char[12];
 color[] colorScheme = new color[8];
 int gameState = 0;
 int previousGameState;
 int ticker = 0;
-int runTimeTicker = 0;
 int sectionSelected = 0;
 int colorSelected = 0;
 int tokenSelected = 0;
@@ -77,7 +76,6 @@ void draw() {
 
   //the rest of draw just contains counters and the function for controlling game music
   ticker++;
-  runTimeTicker++;
   musicManager();
   if (delayGame) {
     delay(500);
@@ -93,7 +91,7 @@ void resetTicker() {  //this ticker is mainly used to avoid keys being multiple-
 
 void keysHaveBeenPressed() {  //used in trying to implement the ability to skip the main title fly-in
   keysHaveBeenPressed=true;
-  if (runTimeTicker<100) {
+  if (frameCount<100) {
   }//end if
 } //end keysHaveBeenPressed
 
@@ -103,13 +101,13 @@ void musicManager() {  //this is overly complicated because i tried to make the 
     firstRun = !firstRun;
   }
   //if player presses key before slide-in is complete, skip the music ahead:
-  if (keysHaveBeenPressed && runTimeTicker<100) {
+  if (keysHaveBeenPressed && frameCount<100) {
     // menuMusic.stop();
     // menuMusic.cue(1.7);
     // menuMusic.play();
   }
   //to repeat music:
-  if (!menuMusic.isPlaying() && runTimeTicker>100) {
+  if (!menuMusic.isPlaying() && frameCount>100) {
     menuMusic.cue(5);
     //menuMusic.play();
   } //to loop menu music from the 5 second mark (skipping fade in)

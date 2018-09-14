@@ -40,16 +40,16 @@ void coinToss() { //toss a virtual coin to determine who goes first (is "X").
 } //end coin toss
 
 void drawSpinningCoin() {
-  if (runTimeTicker/2%3==0) {
+  if (frameCount/2%3==0) {
     coin1(int(width/2), int(height*.4));
     if (drawCoinShowingHeads) {
       coinSpinningHeads(int(width/2), int(height*.4)-coinTossFallCounter);
     } else { 
       coinSpinningTails(int(width/2), int(height*.4)-coinTossFallCounter);
     }
-  } else if (runTimeTicker/2%3==1) {
+  } else if (frameCount/2%3==1) {
     coin2(int(width/2), int(height*.4));
-  } else if (runTimeTicker/2%3==2) {
+  } else if (frameCount/2%3==2) {
     coin3(int(width/2), int(height*.4));
     drawCoinShowingHeads = !drawCoinShowingHeads;
   }
@@ -68,16 +68,16 @@ boolean getCoinResult() {
 
 void drawLandingCoin() {
   if (coinTossFallCounter>-150) { //while the coin is falling down
-    if (runTimeTicker/2%3==0) {
+    if (frameCount/2%3==0) {
       coin1(int(width/2), int(height*.4)-coinTossFallCounter);
       if (drawCoinShowingHeads) {
         coinSpinningHeads(int(width/2), int(height*.4)-coinTossFallCounter);
       } else { 
         coinSpinningTails(int(width/2), int(height*.4)-coinTossFallCounter);
       }
-    } else if (runTimeTicker/2%3==1) {
+    } else if (frameCount/2%3==1) {
       coin2(int(width/2), int(height*.4)-coinTossFallCounter);
-    } else if (runTimeTicker/2%3==2) {
+    } else if (frameCount/2%3==2) {
       coin3(int(width/2), int(height*.4)-coinTossFallCounter);
       drawCoinShowingHeads = !drawCoinShowingHeads;
       coinTossFallCounter-=15;
