@@ -6,7 +6,7 @@ A new version of Tic Tac Toe.
 - Two players compete in rounds of Tic Tac Toe
 - Each victory earns a meta-token for the victorious player
 - Players may play meta-tokens, following the same rules as Tic Tac Toe, on the meta-game board
-- However, play on the meta-game board is not turn-based, but occurs in real-time. Meta-tokens can be banked and played at any time.
+- Play on the meta-game board is turn-based, however players may play any number of tokens up to the amount they have available, or none at all. For example, a player could bank three meta-tokens over three victories in the standard game round, and then play all three meta-tokens simultaneously on a later turn.
 
 ["Lazer 84" font](http://sunrise-digital.net/font.html) by Juan Hodgson / Sunrise Digital
 
